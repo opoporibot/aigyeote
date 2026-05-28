@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아이곁에 | 지역 아동돌봄 연결 플랫폼</title>
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --card: rgba(255, 255, 255, 0.92);
+      --text: #10233f;
+      --muted: #5f6e85;
+      --primary: #4c74ff;
+      --primary-soft: #e7eeff;
+      --line: #dfe7f6;
+      --shadow: 0 24px 56px rgba(20, 41, 85, 0.12);
+      --success: #11845b;
+      --warning: #b66a14;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #eef3ff 0%, var(--bg) 35%, #fbfcff 100%);
+      color: var(--text);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1140px, calc(100% - 32px)); margin: 0 auto; }
+
+    .hero {
+      padding: 72px 0 40px;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #ffffff 0%, #eef3ff 100%);
+      border: 1px solid rgba(76, 116, 255, 0.12);
+      border-radius: 32px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 24px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    #heroTitle { margin-top: 18px; font-size: clamp(34px, 6vw, 56px); line-height: 1.08; letter-spacing: -0.03em; }
+    .hero-copy { margin-top: 16px; font-size: 18px; line-height: 1.7; color: var(--muted); }
+
+    .quick-grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .quick-item {
+      background: rgba(255,255,255,0.74);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .hero-side {
+      background: rgba(16, 35, 63, 0.96);
+      color: white;
+      border-radius: 28px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .hero-side ul {
+      margin: 0;
+      padding-left: 20px;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.7;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 13px;
+    }
+
+    .section {
+      padding: 18px 0 38px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-head p { color: var(--muted); line-height: 1.65; }
+
+    .search-panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 18px 40px rgba(17, 34, 68, 0.07);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    input, select, button {
+      font: inherit;
+      border: 0;
+      outline: none;
+    }
+
+    input, select {
+      width: 100%;
+      background: #f5f8fe;
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 15px 16px;
+    }
+
+    button {
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 15px 18px;
+      font-weight: 700;
+      transition: 0.18s ease;
+    }
+
+    .primary-btn {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 12px 24px rgba(76, 116, 255, 0.24);
+    }
+
+    .primary-btn:hover { transform: translateY(-1px); }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 14px 30px rgba(17, 34, 68, 0.06);
+    }
+
+    .meta { color: var(--muted); font-size: 14px; }
+    .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .chip {
+      display: inline-flex;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #eff4ff;
+      color: #2f58d8;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      color: var(--success);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .need-card {
+      display: grid;
+      gap: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    }
+
+    .need-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .need-label {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #fff4e5;
+      color: var(--warning);
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    #participationButtons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .secondary-btn {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .secondary-btn.is-active {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: rgba(76, 116, 255, 0.24);
+    }
+
+    .cta {
+      margin: 24px 0 72px;
+      border-radius: 28px;
+      padding: 28px;
+      background: #11233f;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .cta p { color: rgba(255,255,255,0.76); line-height: 1.65; }
+
+    @media (max-width: 980px) {
+      .hero-card, .search-panel, .card-grid, .cta {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      .cta { display: flex; flex-direction: column; align-items: start; }
+    }
+
+    @media (max-width: 720px) {
+      .wrap { width: min(100% - 20px, 1140px); }
+      .hero { padding-top: 24px; }
+      .hero-card { padding: 24px; border-radius: 24px; }
+      .quick-grid, .card-grid { grid-template-columns: 1fr; }
+      .section { padding-bottom: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="wrap hero-card">
+        <div>
+          <span class="badge">아이곁에 · 지역 아동돌봄 연결 플랫폼</span>
+          <h1 id="heroTitle">우리 동네에서<br>아이들을 위한 도움을 더 쉽게 찾고 연결합니다.</h1>
+          <p class="hero-copy">
+            아이곁에는 지역 아동돌봄 기관 정보, 참여 방식, 지금 필요한 도움을 한 번에 모아
+            후원·봉사·물품기부를 더 안전하고 쉽게 이어주는 웹앱입니다.
+          </p>
+          <div class="quick-grid">
+            <div class="quick-item">
+              <h3>기관 찾기</h3>
+              <p class="meta">지역아동센터, 공동생활가정, 보호·자립 지원기관을 지역별로 탐색</p>
+            </div>
+            <div class="quick-item">
+              <h3>참여 방식</h3>
+              <p class="meta">후원, 자원봉사, 물품기부, 멘토링 등 내가 할 수 있는 방식 중심 탐색</p>
+            </div>
+            <div class="quick-item">
+              <h3>지금 필요한 도움</h3>
+              <p class="meta">현재 모집 중이거나 시급한 요청을 보기 쉽게 카드로 확인</p>
+            </div>
+          </div>
+        </div>
+        <aside class="hero-side">
+          <div>
+            <h3>왜 아이곁에인가요?</h3>
+            <ul>
+              <li>공공기관/기관 홈페이지 기준으로 검증 가능한 정보 중심</li>
+              <li>복잡한 복지 용어보다 시민이 이해하기 쉬운 설명 우선</li>
+              <li>기관 단위 정보 중심으로 안전한 참여 유도</li>
+            </ul>
+          </div>
+          <div class="pill-row">
+            <span class="pill">검증된 기관</span>
+            <span class="pill">지역 기반 탐색</span>
+            <span class="pill">참여 라우팅</span>
+            <span class="pill">민감정보 최소화</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="section-head">
+        <div>
+          <h2>기관 찾기</h2>
+          <p>지역명 또는 기관 유형으로 빠르게 필터링해 가까운 기관과 참여 경로를 확인하세요.</p>
+        </div>
+      </div>
+      <div class="search-panel">
+        <input id="regionSearch" type="text" placeholder="예: 성남, 수원, 지역아동센터">
+        <select id="typeFilter">
+          <option value="all">전체 기관 유형</option>
+          <option value="지역아동센터">지역아동센터</option>
+          <option value="공동생활가정">공동생활가정</option>
+          <option value="자립지원기관">자립지원기관</option>
+          <option value="보호전문기관">보호전문기관</option>
+        </select>
+        <button id="filterButton" class="primary-btn" type="button">찾아보기</button>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="section-head">
+        <div>
+          <h2>검증된 기관 목록</h2>
+          <p>초기 MVP 예시 데이터입니다. 추후 공공·기관 출처 기반으로 확장할 수 있습니다.</p>
+        </div>
+      </div>
+      <div id="institutionList" class="card-grid"></div>
+    </section>
+
+    <section class="section wrap">
+      <div class="section-head">
+        <div>
+          <h2>참여 방식</h2>
+          <p>내가 할 수 있는 방식만 골라서 필요한 도움 카드도 함께 추려볼 수 있습니다.</p>
+        </div>
+      </div>
+      <div id="participationButtons"></div>
+    </section>
+
+    <section class="section wrap">
+      <div class="section-head">
+        <div>
+          <h2>지금 필요한 도움</h2>
+          <p>기관 운영자 검수 또는 운영팀 검토를 거친 요청만 노출하는 구조를 상정했습니다.</p>
+        </div>
+      </div>
+      <div id="supportFeed" class="card-grid"></div>
+    </section>
+
+    <section class="wrap">
+      <div class="cta">
+        <div>
+          <h2>아이곁에 MVP 방향</h2>
+          <p>검증형 디렉토리 + 참여 라우팅 + 지역 기반 탐색을 먼저 구현하고, 이후 기관 인증과 운영 도구를 확장하는 방향입니다.</p>
+        </div>
+        <a class="primary-btn" href="https://github.com/opoporibot/aigyeote" target="_blank" rel="noreferrer">GitHub 레포 보기</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const institutions = [
+      {
+        name: '분당 푸른꿈 지역아동센터',
+        type: '지역아동센터',
+        region: '성남',
+        description: '방과 후 돌봄, 학습, 급식, 생활 지원을 제공하는 지역 기반 돌봄 공간입니다.',
+        participation: ['정기후원', '물품기부', '자원봉사'],
+        verification: '공식 출처 확인 · 최근 업데이트 30일 이내'
+      },
+      {
+        name: '수원 아이희망 공동생활가정',
+        type: '공동생활가정',
+        region: '수원',
+        description: '보호가 필요한 아동에게 가정형 생활환경과 일상 돌봄을 제공하는 생활 기반 기관입니다.',
+        participation: ['물품기부', '멘토링', '자원봉사'],
+        verification: '기관 정보 확인됨 · 운영팀 검토 완료'
+      },
+      {
+        name: '경기 자립이음센터',
+        type: '자립지원기관',
+        region: '용인',
+        description: '보호종료 아동·청소년의 주거, 진로, 생활 자립 준비를 지원합니다.',
+        participation: ['멘토링', '정기후원', '재능기부'],
+        verification: '공식 홈페이지 확인 · 최근 검증 완료'
+      },
+      {
+        name: '우리동네 아동보호전문기관',
+        type: '보호전문기관',
+        region: '성남',
+        description: '학대 피해 아동 보호와 사례 관리, 회복 지원을 담당하는 전문 기관입니다.',
+        participation: ['캠페인', '후원'],
+        verification: '공식 출처 확인 · 연락처 검증 완료'
+      }
+    ];
+
+    const supportNeeds = [
+      {
+        title: '여름 방학 급식 키트 지원',
+        institution: '분당 푸른꿈 지역아동센터',
+        region: '성남',
+        category: '물품기부',
+        detail: '방학 중 식사 공백이 생기지 않도록 간편 조리 식품과 간식 키트가 필요합니다.'
+      },
+      {
+        title: '주말 학습 멘토 모집',
+        institution: '수원 아이희망 공동생활가정',
+        region: '수원',
+        category: '멘토링',
+        detail: '중학생 대상 기초 영어·수학 멘토링을 월 2회 진행할 자원봉사자를 찾고 있습니다.'
+      },
+      {
+        title: '자립준비 청소년 면접 코칭',
+        institution: '경기 자립이음센터',
+        region: '용인',
+        category: '재능기부',
+        detail: '진로 준비 중인 청소년을 위한 자기소개서 첨삭과 모의 면접 지원이 필요합니다.'
+      }
+    ];
+
+    const participationTypes = ['전체', '정기후원', '자원봉사', '물품기부', '멘토링', '재능기부', '캠페인'];
+    const state = {
+      query: '',
+      type: 'all',
+      participation: '전체'
+    };
+
+    const institutionList = document.getElementById('institutionList');
+    const supportFeed = document.getElementById('supportFeed');
+    const regionSearch = document.getElementById('regionSearch');
+    const typeFilter = document.getElementById('typeFilter');
+    const participationButtons = document.getElementById('participationButtons');
+    const filterButton = document.getElementById('filterButton');
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function renderInstitutions(items) {
+      if (!items.length) {
+        institutionList.innerHTML = '<div class="card"><h3>조건에 맞는 기관이 아직 없습니다.</h3><p class="meta">검색어를 조금 더 넓혀보거나 기관 유형을 전체로 바꿔보세요.</p></div>';
+        return;
+      }
+
+      institutionList.innerHTML = items.map((item) => `
+        <article class="card">
+          <p class="meta">${escapeHtml(item.region)} · ${escapeHtml(item.type)}</p>
+          <h3 style="margin-top:8px;">${escapeHtml(item.name)}</h3>
+          <p class="meta" style="margin-top:10px; line-height:1.7;">${escapeHtml(item.description)}</p>
+          <div class="stack">
+            ${item.participation.map((tag) => `<span class="chip">${escapeHtml(tag)}</span>`).join('')}
+          </div>
+          <div class="status">● ${escapeHtml(item.verification)}</div>
+        </article>
+      `).join('');
+    }
+
+    function renderNeeds(items) {
+      if (!items.length) {
+        supportFeed.innerHTML = '<div class="card need-card"><h3>해당 참여 방식의 요청이 아직 없습니다.</h3><p class="meta">다른 참여 방식을 선택해 더 많은 요청을 확인해보세요.</p></div>';
+        return;
+      }
+
+      supportFeed.innerHTML = items.map((item) => `
+        <article class="card need-card">
+          <div class="need-top">
+            <div>
+              <p class="meta">${escapeHtml(item.region)} · ${escapeHtml(item.institution)}</p>
+              <h3 style="margin-top:8px;">${escapeHtml(item.title)}</h3>
+            </div>
+            <span class="need-label">${escapeHtml(item.category)}</span>
+          </div>
+          <p class="meta" style="line-height:1.7;">${escapeHtml(item.detail)}</p>
+        </article>
+      `).join('');
+    }
+
+    function renderParticipationButtons() {
+      participationButtons.innerHTML = participationTypes.map((type) => `
+        <button
+          type="button"
+          class="secondary-btn ${state.participation === type ? 'is-active' : ''}"
+          data-participation="${escapeHtml(type)}"
+        >${escapeHtml(type)}</button>
+      `).join('');
+
+      participationButtons.querySelectorAll('button').forEach((button) => {
+        button.addEventListener('click', () => {
+          state.participation = button.dataset.participation;
+          applyFilter();
+        });
+      });
+    }
+
+    function applyFilter() {
+      state.query = regionSearch.value.trim().toLowerCase();
+      state.type = typeFilter.value;
+
+      const filteredInstitutions = institutions.filter((item) => {
+        const textMatched = !state.query || [item.name, item.region, item.type].some((field) => field.toLowerCase().includes(state.query));
+        const typeMatched = state.type === 'all' || item.type === state.type;
+        const participationMatched = state.participation === '전체' || item.participation.includes(state.participation);
+        return textMatched && typeMatched && participationMatched;
+      });
+
+      const filteredNeeds = supportNeeds.filter((item) => {
+        const textMatched = !state.query || [item.title, item.institution, item.region].some((field) => field.toLowerCase().includes(state.query));
+        const participationMatched = state.participation === '전체' || item.category === state.participation;
+        return textMatched && participationMatched;
+      });
+
+      renderParticipationButtons();
+      renderInstitutions(filteredInstitutions);
+      renderNeeds(filteredNeeds);
+    }
+
+    filterButton.addEventListener('click', applyFilter);
+    regionSearch.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        applyFilter();
+      }
+    });
+    typeFilter.addEventListener('change', applyFilter);
+
+    renderParticipationButtons();
+    renderInstitutions(institutions);
+    renderNeeds(supportNeeds);
+  </script>
+</body>
+</html>
