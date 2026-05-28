@@ -23,3 +23,26 @@ python3 -m http.server 8000
 
 - `index.html` : 단일 파일 웹앱
 - `tests/test_app_contract.py` : 계약 테스트
+- `scripts/publish-cloudflare-tunnel.sh` : Cloudflare 로그인 후 고정 hostname용 named tunnel 실행 스크립트
+
+## 고정 Cloudflare 주소로 열기
+
+현재는 Quick Tunnel 임시 주소만 바로 열 수 있고, **고정 주소**는 Cloudflare 계정 인증이 먼저 필요합니다.
+
+1. 이 Mac에서 Cloudflare 로그인 실행
+   ```bash
+   cloudflared tunnel login
+   ```
+2. 로그인 완료 후 로컬 서버 실행
+   ```bash
+   python3 -m http.server 8000
+   ```
+3. 고정 hostname으로 named tunnel 실행
+   ```bash
+   ./scripts/publish-cloudflare-tunnel.sh aigyeote <원하는-호스트명> 8000
+   ```
+
+예:
+```bash
+./scripts/publish-cloudflare-tunnel.sh aigyeote aigyeote.example.com 8000
+```
