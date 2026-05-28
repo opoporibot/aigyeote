@@ -18,6 +18,9 @@ class AppContractTests(unittest.TestCase):
             'institutionList',
             'supportFeed',
             'participationButtons',
+            'summaryStats',
+            'institutionDetailPanel',
+            'guideList',
         ]
         for token in required_ids:
             self.assertIn(token, html)
@@ -28,6 +31,9 @@ class AppContractTests(unittest.TestCase):
             '기관 찾기',
             '지금 필요한 도움',
             '참여 방식',
+            '기관 상세',
+            '처음 참여하는 분을 위한 가이드',
+            '검증 상태',
         ]
         for token in required_copy:
             self.assertIn(token, html)
@@ -37,8 +43,12 @@ class AppContractTests(unittest.TestCase):
         required_hooks = [
             'const institutions =',
             'const supportNeeds =',
+            'const guides =',
             'renderInstitutions(',
             'renderNeeds(',
+            'renderGuides(',
+            'renderDetailPanel(',
+            'selectInstitution(',
             'applyFilter(',
         ]
         for token in required_hooks:
